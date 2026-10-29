@@ -26,7 +26,8 @@ export function resolveImageProvider(
 export function imageProviderSupportsReferences(
   configured = process.env.CODEX_SLIDES_IMAGE_PROVIDER,
 ): boolean {
-  return resolveImageProvider(configured) === "codex";
+  const provider = resolveImageProvider(configured);
+  return provider === "codex" || provider === "minimax";
 }
 
 export async function generateSlideImage(

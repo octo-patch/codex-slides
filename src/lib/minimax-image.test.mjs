@@ -1,4 +1,5 @@
 import assert from "node:assert/strict";
+import { readFileSync } from "node:fs";
 import test from "node:test";
 
 import {
@@ -86,6 +87,11 @@ test("encodes subject references for image-to-image requests", () => {
     type: "character",
     image_file: `data:image/png;base64,${Buffer.from("reference-image").toString("base64")}`,
   }]);
+});
+
+test("enables reference loading for the MiniMax image provider", () => {
+  const source = readFileSync(new URL("./image.ts", import.meta.url), "utf8");
+  assert.match(source, /provider === "codex" \|\| provider === "minimax"/);
 });
 
 test("decodes a data URL response", async () => {
